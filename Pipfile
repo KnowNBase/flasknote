@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+mypy = "*"
+ipykernel = "*"
+
+[packages]
+flask = "*"
+flask-api = "*"
+pytest = "*"
+mypy = "*"
+returns = "*"
+
+[requires]
+python_version = "3.8"
