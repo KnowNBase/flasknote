@@ -1,21 +1,11 @@
 from typing import List, Optional
-import json 
+import json
 from dataclasses import dataclass
 
+# from server.models import Note, Tag
 
-@dataclass
-class Tag:
-    name: str
-
-
-@dataclass
-class Note:
-    summary: str
-    description: str
-    tags: List[Tag]
 
 class Database:
-
     def __init__(self, filepath):
         self.filepath = filepath
 
@@ -23,7 +13,7 @@ class Database:
         exists = self.all()
         exists.append(data)
         print("save data", exists)
-        with open(self.filepath, 'w') as f:
+        with open(self.filepath, "w") as f:
             f.write(json.dumps(exists))
 
     def all(self) -> List[Note]:
@@ -40,9 +30,10 @@ class Database:
     def get(self, name: str) -> Optional[Note]:
         return None
 
+
 class MemoryStore:
     def __init__(self):
         self.notes = []
-    def write(self, data:dict) -> None:
+
+    def write(self, data: dict) -> None:
         self.notes.append(data)
-        

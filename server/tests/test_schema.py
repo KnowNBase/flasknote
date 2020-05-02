@@ -1,13 +1,15 @@
 from server.schema import validate, NotFoundKeyError, WrongTypeError
 import pytest
 from dataclasses import dataclass
-# what about check real data?
-from server.database import Note
 
-# Our example data We can declare them in fixtures, but i 
+# what about check real data?
+from domain.models import Note
+
+# Our example data We can declare them in fixtures, but i
 # don't like move out some "private" data for this tests
 # Look at them. We expect, that we good understand this
 # structure, so we understand errors and payload
+
 
 @dataclass
 class Payload:
@@ -24,6 +26,7 @@ class Nested:
     data: Payload
     un: Under
 
+
 # as like "json-schema", we can declare them like this:
 # {
 #   "data": {
@@ -35,6 +38,7 @@ class Nested:
 #     }
 #   }
 # }
+
 
 def test_errors_eq():
     """
@@ -59,21 +63,12 @@ def test_simple_data():
 
 
 def test_nesting():
-    assert not validate(Nested, {
-        "data": { "data": 5 },
-        "un": { "v": { "data": 5 } }
-    })
-    
-    errors = validate(Nested, {
-        "data": { "data": "v" },
-        "un": { "v": { "data": 5 } }
-    })
+    assert not validate(Nested, {"data": {"data": 5}, "un": {"v": {"data": 5}}})
+
+    errors = validate(Nested, {"data": {"data": "v"}, "un": {"v": {"data": 5}}})
     assert WrongTypeError("data.data", int, str) in errors
-    
-    errors = validate(Nested, {
-        "data": { "data": 5 },
-        "un": { "v": { "data": "5" } }
-    })
+
+    errors = validate(Nested, {"data": {"data": 5}, "un": {"v": {"data": "5"}}})
     assert WrongTypeError("un.v.data", int, str) in errors
 
 
@@ -83,27 +78,20 @@ def test_multiple_errors():
     assert NotFoundKeyError("un") in errors
     assert NotFoundKeyError("data") in errors
 
-    errors = validate(Nested, {
-        "data": { "data": True },
-        "un": { "v": { "data": "wrong" } }
-    })
+    errors = validate(Nested, {"data": {"data": True}, "un": {"v": {"data": "wrong"}}})
     assert len(errors) == 2
     assert WrongTypeError("un.v.data", int, str) in errors
     assert WrongTypeError("data.data", int, bool) in errors
 
 
+@pytest.mark.integrity
 def test_real_data():
-    errors = validate(Note, {
-        "summary": "name",
-        "description": "long text",
-        "tags": []
-    })
+    errors = validate(Note, {"summary": "name", "description": "long text", "tags": []})
     assert not errors
-    
-    errors = validate(Note, {
-        "summary": "name",
-        "description": "long text",
-        "tags": [ { "bullshit": True } ]
-    })
+
+    errors = validate(
+        Note,
+        {"summary": "name", "description": "long text", "tags": [{"bullshit": True}]},
+    )
     assert errors
     assert NotFoundKeyError("tags.[0].name") in errors
