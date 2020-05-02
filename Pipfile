@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 mypy = "*"
 ipykernel = "*"
+mimesis = "*"
+black = "*"
 
 [packages]
 flask = "*"
@@ -13,6 +15,10 @@ flask-api = "*"
 pytest = "*"
 mypy = "*"
 returns = "*"
+docopt = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
