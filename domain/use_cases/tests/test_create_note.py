@@ -16,7 +16,7 @@ def test_creation():
     request = CreateNote.Input(
         "1", "TDD", "Tests first, but i make it little bit later"
     )
-    response = uc.exec(request)
+    response = uc(request)
 
     gateway.get_user.assert_called_with("1")
     gateway.save_note.assert_called_with(
@@ -35,6 +35,6 @@ def test_gataway_dead():
     gateway: ICreateNoteGateway = Mock()
     gateway.get_user.side_effect = Exception("service not available")
     uc = CreateNote(gateway)
-    out = uc.Output = uc.exec(uc.Input("1", "unnamed", "mock can save me"))
+    out = uc.Output = uc(uc.Input("1", "unnamed", "mock can save me"))
     assert out.errors
     assert StorageError() in out.errors

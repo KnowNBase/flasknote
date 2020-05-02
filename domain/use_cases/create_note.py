@@ -1,11 +1,9 @@
-from abc import ABCMeta, abstractmethod
-from functools import wraps
-
-from domain.models import Note, Tag, User
 import typing as t
+from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 
 from domain.errors import BaseError, StorageError, NotFoundError
+from domain.models import Note, Tag, User
 
 
 class ICreateNoteGateway(metaclass=ABCMeta):
@@ -35,7 +33,7 @@ class CreateNote:
         id: t.Optional[str] = None
         errors: t.List[BaseError] = field(default_factory=list)
 
-    def exec(self, input_: "Input") -> "Output":
+    def __call__(self, input_: "Input") -> "Output":
         # found = SearchNoteService.find_fuzzy(summary, content)
         # if found:
         #     return found[0]
