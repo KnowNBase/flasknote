@@ -1,4 +1,4 @@
-from typing import List, Optional
+import typing as t
 from dataclasses import dataclass, field
 
 
@@ -19,8 +19,8 @@ class Note:
     """
 
     summary: str
-    description: str
-    tags: List[Tag] = field(default_factory=list)
+    content: str
+    tags: t.List[Tag] = field(default_factory=list)
 
 
 @dataclass
@@ -31,5 +31,13 @@ class Catalog:
     """
 
     name: str
-    notes: List[Note] = field(default_factory=list)
-    tags: List[Tag] = field(default_factory=list)
+    notes: t.List[Note] = field(default_factory=list)
+    tags: t.List[Tag] = field(default_factory=list)
+
+
+@dataclass
+class User:
+    username: str
+    first_name: str
+    last_name: str
+    middle_name: str
