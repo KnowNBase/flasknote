@@ -1,7 +1,6 @@
 import typing as t
 
-# noinspection Mypy
-from docopt import docopt
+from docopt import docopt  # type: ignore
 
 from cli.generator import Chain
 
