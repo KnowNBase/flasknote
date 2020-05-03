@@ -2,17 +2,12 @@ from unittest.mock import Mock
 
 # noinspection Mypy
 import pytest
-# noinspection Mypy
-from mimesis import Text
 
-from domain.models import Note
 from domain.use_cases import list_notes
+from utils.tests import generate_note
 
-t = Text()
 
-
-def generate_note():
-    return Note(t.title(), t.sentence())
+# noinspection Mypy
 
 
 @pytest.fixture

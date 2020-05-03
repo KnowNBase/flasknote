@@ -8,8 +8,11 @@ from domain.use_cases import AbstractUseCase
 
 
 class Spec:
-    def __init__(self):
-        pass
+    def and_spec(self, other: "Spec") -> "Spec":
+        return AndSpec(self, other)
+
+    def or_spec(self, other: "Spec") -> "Spec":
+        return OrSpec(self, other)
 
 
 @dataclass
