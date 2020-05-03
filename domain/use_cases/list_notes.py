@@ -51,7 +51,7 @@ class Input:
 
 @dataclass
 class Output:
-    notes: t.Optional[t.List[Note]] = None
+    notes: t.List[Note] = field(default_factory=list)
     errors: t.List[BaseError] = field(default_factory=list)
 
 

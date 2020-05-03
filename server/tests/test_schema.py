@@ -1,9 +1,11 @@
-from server.schema import validate, NotFoundKeyError, WrongTypeError
-import pytest
 from dataclasses import dataclass
+
+import pytest  # type: ignore
 
 # what about check real data?
 from domain.models import Note
+from server.schema import validate, NotFoundKeyError, WrongTypeError
+
 
 # Our example data We can declare them in fixtures, but i
 # don't like move out some "private" data for this tests

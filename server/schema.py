@@ -1,6 +1,8 @@
-from dataclasses import dataclass, fields, is_dataclass
-from typing import List, _GenericAlias, get_origin, get_args
 import logging as l
+from dataclasses import dataclass, fields, is_dataclass
+
+# noinspection Mypy,PyUnresolvedReferences
+from typing import List, _GenericAlias, get_origin, get_args
 
 LOGGER = l.getLogger(__name__)
 
@@ -49,7 +51,7 @@ class ElementWrongType(WrongTypeError):
 
 def validate(model, payload: dict, path: str = "") -> List[SchemaError]:
     if not isinstance(payload, dict):
-        return [SchemaError("invalid payload")]
+        return [SchemaError()]
     model_fields = fields(model)
     errors: List[SchemaError] = []
     for field in model_fields:
@@ -77,11 +79,13 @@ def validate(model, payload: dict, path: str = "") -> List[SchemaError]:
             elif isinstance(field.type, _GenericAlias):
                 # it is typing module - we need to get origin and check with
                 LOGGER.debug("check typing types")
-                if actualtype != get_origin(field.type):
+                # noinspection Mypy
+                origin_type: type = get_origin(field.type)
+                if actualtype != origin_type:
                     errors.append(
                         WrongTypeError(
                             key=key,
-                            expect_type=get_origin(field.type),
+                            expect_type=origin_type,
                             actual_type=actualtype,
                         )
                     )
@@ -92,7 +96,7 @@ def validate(model, payload: dict, path: str = "") -> List[SchemaError]:
                 )
                 if len(args) > 0:
                     arg = args[0]
-                    if get_origin(field.type) == actualtype == list:
+                    if origin_type == actualtype == list:
                         for i, e in enumerate(payload[field.name]):
                             current_path = f"{key}.[{i}]"
                             LOGGER.debug("validate array", current_path)

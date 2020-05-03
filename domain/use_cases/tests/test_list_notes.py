@@ -1,7 +1,6 @@
 from unittest.mock import Mock
 
-# noinspection Mypy
-import pytest
+import pytest  # type: ignore
 
 from domain.use_cases import list_notes
 from utils.tests import generate_note

@@ -1,4 +1,4 @@
-from mimesis import Text
+from mimesis import Text  # type: ignore
 
 from domain.models import Note
 
