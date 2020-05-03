@@ -2,11 +2,11 @@ import typing as t
 
 from domain.errors import NotFoundError
 from domain.models import Note, User
-from domain.use_cases.create_note import ICreateNoteGateway
+from domain.use_cases.create_note import IGateway
 from storage.repositories.dict_note_repository import DictNoteRepository
 
 
-class DictCreateNoteGateway(ICreateNoteGateway):
+class DictCreateNoteGateway(IGateway):
     def __init__(self):
         self.users = {}
         self.note_repo = DictNoteRepository()

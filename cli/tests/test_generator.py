@@ -3,19 +3,19 @@ from unittest.mock import Mock
 from cli.docopt_generator import Generator
 from cli.generator import Chain
 from domain.models import Note
-from domain.use_cases.create_note import CreateNote, ICreateNoteGateway
+from domain.use_cases.create_note import UseCase, IGateway
 
 
 # noinspection PyUnresolvedReferences
 def test_create_one_command():
     note = Note("note title", "note content")
-    gw: ICreateNoteGateway = Mock()
+    gw: IGateway = Mock()
     input_parser = Mock()
-    input_parser.return_value = CreateNote.Input("1", note.summary, note.content)
+    input_parser.return_value = UseCase.Input("1", note.summary, note.content)
     output_presentor = Mock()
     links = [
         Chain(
-            usecase=CreateNote,
+            usecase=UseCase,
             dependencies=dict(gateway=gw),
             command_name="mk",
             command_doc="""

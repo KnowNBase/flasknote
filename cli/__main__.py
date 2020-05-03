@@ -15,11 +15,11 @@ import docopt
 
 from cli.docopt_generator import Generator
 from cli.generator import Chain
-from domain.use_cases.create_note import CreateNote
+from domain.use_cases.create_note import UseCase
 from storage.gateways.create_note_gateway import DictCreateNoteGateway
 
 
-def input_parser(args: t.Dict[str, t.Any]) -> CreateNote.Input:
+def input_parser(args: t.Dict[str, t.Any]) -> UseCase.Input:
     summary = args["<summary>"]
     content = args["CONTENT"]
     if content is None or len(content) == 0:
@@ -32,10 +32,10 @@ def input_parser(args: t.Dict[str, t.Any]) -> CreateNote.Input:
             else:
                 enter_times = 0
                 content += line + "\n"
-    return CreateNote.Input("1", summary, content)
+    return UseCase.Input("1", summary, content)
 
 
-def output_presentor(output: CreateNote.Output):
+def output_presentor(output: UseCase.Output):
     if output.errors:
         for e in output.errors:
             print("ERROR:", e)
@@ -46,7 +46,7 @@ def output_presentor(output: CreateNote.Output):
 if __name__ == "__main__":
     links = [
         Chain(
-            usecase=CreateNote,
+            usecase=UseCase,
             dependencies=dict(gateway=DictCreateNoteGateway()),
             command_name="mk",
             command_doc="""
