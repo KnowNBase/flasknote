@@ -2,7 +2,7 @@ import logging as l
 from dataclasses import dataclass, fields, is_dataclass
 
 # noinspection Mypy,PyUnresolvedReferences
-from typing import List, _GenericAlias, get_origin, get_args
+from typing import List, _GenericAlias, get_origin, get_args  # type: ignore
 
 LOGGER = l.getLogger(__name__)
 
@@ -79,14 +79,11 @@ def validate(model, payload: dict, path: str = "") -> List[SchemaError]:
             elif isinstance(field.type, _GenericAlias):
                 # it is typing module - we need to get origin and check with
                 LOGGER.debug("check typing types")
-                # noinspection Mypy
-                origin_type: type = get_origin(field.type)
+                origin_type: type = get_origin(field.type)  # type: ignore
                 if actualtype != origin_type:
                     errors.append(
                         WrongTypeError(
-                            key=key,
-                            expect_type=origin_type,
-                            actual_type=actualtype,
+                            key=key, expect_type=origin_type, actual_type=actualtype,
                         )
                     )
                 # TODO: check subtypes of field.type

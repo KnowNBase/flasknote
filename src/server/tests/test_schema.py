@@ -88,7 +88,7 @@ def test_multiple_errors():
 
 @pytest.mark.integrity
 def test_real_data():
-    errors = validate(Note, {"summary": "name", "description": "long text", "tags": []})
+    errors = validate(Note, {"summary": "name", "content": "long text", "tags": []})
     assert not errors
 
     errors = validate(
