@@ -1,7 +1,6 @@
 from unittest.mock import Mock
 
-from cli.docopt_generator import Generator
-from cli.generator import Chain
+from cli.generator.docopt_generator import Generator, DocOptChain
 from domain.models import Note
 from domain.use_cases import create_note
 
@@ -13,11 +12,11 @@ def test_create_one_command():
     input_parser = Mock()
     input_parser.return_value = create_note.Input("1", note.summary, note.content)
     output_presentor = Mock()
-    links = [
-        Chain(
+    chains = [
+        DocOptChain(
             usecase=create_note.UseCase,
             dependencies=dict(gateway=gw),
-            command_name="mk",
+            name="mk",
             command_doc="""
             Usage:
                 mk <summary> [CONTENT]
@@ -27,7 +26,7 @@ def test_create_one_command():
         )
     ]
     g = Generator()
-    commands = g(links)
+    commands = g(chains)
     assert commands
     create_note_cmd = commands["mk"]
     create_note_cmd([note.summary, note.content])

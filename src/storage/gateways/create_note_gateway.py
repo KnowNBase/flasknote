@@ -6,7 +6,7 @@ from domain.use_cases.create_note import IGateway
 from storage.repositories.dict_note_repository import DictNoteRepository
 
 
-class DictCreateNoteGateway(IGateway):
+class Gateway(IGateway):
     def __init__(self):
         self.users = {}
         self.note_repo = DictNoteRepository()

@@ -1,6 +1,6 @@
 import typing as t
 
-from cli.generator import Chain
+from cli.generator.docopt_generator import DocOptChain
 from domain.use_cases import list_notes
 from storage.gateways import list_notes_gateway
 
@@ -25,10 +25,10 @@ def input_parser(args: t.Dict[str, t.Any]) -> list_notes.Input:
     return list_notes.Input("1", pg)
 
 
-list_notes_chain = Chain(
+list_notes_chain = DocOptChain(
     usecase=list_notes.UseCase,
     dependencies=dict(gateway=list_notes_gateway.Gateway()),
-    command_name="list",
+    name="list",
     command_doc="""
                 List 
                 Usage:

@@ -13,7 +13,7 @@ import docopt  # type: ignore
 
 from cli.adapters.create_note import create_note_chain
 from cli.adapters.list_notes import list_notes_chain
-from cli.docopt_generator import Generator
+from cli.generator.docopt_generator import Generator
 
 if __name__ == "__main__":
     links = [
