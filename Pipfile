@@ -16,6 +16,8 @@ pytest = "*"
 mypy = "*"
 returns = "*"
 docopt = "*"
+requests = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"

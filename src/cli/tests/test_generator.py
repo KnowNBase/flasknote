@@ -9,6 +9,7 @@ from domain.use_cases import create_note
 def test_create_one_command():
     note = Note("note title", "note content")
     gw: IGateway = Mock()
+    gw.save_note.return_value = (note, "1")
     input_parser = Mock()
     input_parser.return_value = create_note.Input("1", note.summary, note.content)
     output_presentor = Mock()

@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
-from domain.errors import StorageError
+import pytest  # type: ignore
+
 from domain.models import Note
 from domain.use_cases import create_note
 
@@ -35,6 +36,6 @@ def test_gataway_dead():
     gateway: create_note.IGateway = Mock()
     gateway.get_user.side_effect = Exception("service not available")
     uc = create_note.UseCase(gateway)
-    out: create_note.Output = uc(create_note.Input("1", "unnamed", "mock can save me"))
-    assert out.errors
-    assert StorageError() in out.errors
+    # bypass unknown exceptions
+    with pytest.raises(Exception):
+        out: create_note.Output = uc(create_note.Input("1", "unnamed", "mock can save me"))

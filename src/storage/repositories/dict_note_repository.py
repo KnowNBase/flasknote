@@ -1,24 +1,28 @@
-from domain.models import Note
-from domain.errors import NotFoundError
 import typing as t
+
+from domain.errors import NotFoundError
+from domain.models import Note
 
 
 class DictNoteRepository:
     def __init__(self):
-        self.notes = {}
+        self._notes = {}
+
+    def all_notes(self):
+        return list(self._notes.values())
 
     def get(self, id: str) -> Note:
-        if not self.notes.get(id):
+        if not self._notes.get(id):
             raise NotFoundError(type="note", id=id)
-        return self.notes[id]
+        return self._notes[id]
 
     def save(self, note: Note) -> t.Tuple[Note, str]:
         id_ = self.__newid()
-        self.notes[id_] = note
+        self._notes[id_] = note
         return note, id_
 
     def __newid(self) -> str:
-        if not self.notes:
+        if not self._notes:
             return str(1)
-        lastid = list(self.notes.keys())[-1]
+        lastid = list(self._notes.keys())[-1]
         return str(int(lastid) + 1)

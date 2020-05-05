@@ -10,11 +10,10 @@ class Chain:
     present_output: t.Callable
 
     def compose(self) -> t.Callable[[t.Dict[str, t.Any]], t.Any]:
-        def use_case_function(args):
+        def use_case_function(args=None):
             UseCase = self.usecase
             uc = UseCase(**self.dependencies)
             input_ = self.parse_input(args)
             output = uc(input_)
             return self.present_output(output)
-
         return use_case_function
