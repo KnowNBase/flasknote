@@ -2,34 +2,31 @@ from unittest.mock import Mock
 
 import pytest  # type: ignore
 
-from domain.models import Note
 from domain.use_cases import create_note
+from utils.tests import generate_note
 
 
-# noinspection PyUnresolvedReferences
 def test_creation():
+    note = generate_note()
     gateway: create_note.IGateway = Mock()
     gateway.save_note.return_value = (
-        Note("TDD", "Tests first, but i make it little bit later", []),
-        "noteid",
+        note,
+        "1",
     )
+    gateway.get_user.return_value = note.author
     uc = create_note.UseCase(gateway)
-    request = create_note.Input(
-        "1", "TDD", "Tests first, but i make it little bit later"
-    )
+    request = create_note.Input(user_id="1", summary=note.summary, content=note.content)
     response = uc(request)
 
+    # noinspection PyUnresolvedReferences
     gateway.get_user.assert_called_with("1")
-    gateway.save_note.assert_called_with(
-        Note("TDD", "Tests first, but i make it little bit later", [])
-    )
+    # noinspection PyUnresolvedReferences
+    gateway.save_note.assert_called_with(note)
 
     assert not response.errors
     # check that UC returs results of gateway
-    assert response.id == "noteid"
-    assert response.note == Note(
-        "TDD", "Tests first, but i make it little bit later", []
-    )
+    assert response.id == "1"
+    assert response.note == note
 
 
 def test_gataway_dead():
@@ -38,4 +35,6 @@ def test_gataway_dead():
     uc = create_note.UseCase(gateway)
     # bypass unknown exceptions
     with pytest.raises(Exception):
-        out: create_note.Output = uc(create_note.Input("1", "unnamed", "mock can save me"))
+        out: create_note.Output = uc(
+            create_note.Input("1", "unnamed", "mock can save me")
+        )

@@ -16,12 +16,6 @@ class Spec:
 
 
 @dataclass
-class PageSpec(Spec):
-    page: int
-    items_per_page: int
-
-
-@dataclass
 class OrSpec(Spec):
     left: Spec
     right: Spec
@@ -31,6 +25,17 @@ class OrSpec(Spec):
 class AndSpec(Spec):
     left: Spec
     right: Spec
+
+
+@dataclass
+class PageSpec(Spec):
+    page: int
+    items_per_page: int
+
+
+@dataclass
+class AuthorSpec(Spec):
+    author_id: str
 
 
 class IGateway(metaclass=ABCMeta):
@@ -63,8 +68,8 @@ class UseCase(AbstractUseCase[Input, Output]):
         user = self.gateway.get_user(input.user_id)
         # check permission
         # self.permission_service.check_user(user, self)
-        # spec = AuthorSpec(input.user_id)
-        spec = PageSpec(input.page, 100)
+        spec: Spec = AuthorSpec(input.user_id)
+        spec = spec.and_spec(PageSpec(input.page, 100))
         notes = self.gateway.load_notes([spec])
         return Output(notes=notes)
 

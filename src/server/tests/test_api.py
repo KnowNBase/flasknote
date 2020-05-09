@@ -20,6 +20,7 @@ def test_create_note(flask_client):
     assert len(notes) == 1
     assert notes["1"].summary == "title"
     assert notes["1"].content == "text"
+    assert notes["1"].author
 
 
 def test_get_notes(flask_client):

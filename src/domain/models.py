@@ -12,6 +12,17 @@ class Tag:
 
 
 @dataclass
+class User:
+    """
+    So, it's user
+    """
+    username: str
+    first_name: str
+    last_name: str
+    middle_name: str
+
+
+@dataclass
 class Note:
     """
     short note. little knowledge. can has tags for 
@@ -20,6 +31,7 @@ class Note:
 
     summary: str
     content: str
+    author: User
     tags: t.List[Tag] = field(default_factory=list)
 
 
@@ -33,11 +45,3 @@ class Catalog:
     name: str
     notes: t.List[Note] = field(default_factory=list)
     tags: t.List[Tag] = field(default_factory=list)
-
-
-@dataclass
-class User:
-    username: str
-    first_name: str
-    last_name: str
-    middle_name: str

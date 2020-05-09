@@ -9,6 +9,8 @@ from server.ioc import create_note_gateway
 
 
 def input_parser(_: t.Dict[str, t.Any]) -> Input:
+    # errors = validate(Note, request.get_json())
+    # TODO: optional fields or fields from other data stores, like auth session
     summary = request.get_json().get("summary", "")  # type: ignore
     content = request.get_json().get("content", "")  # type: ignore
     return Input(user_id="1", summary=summary, content=content)

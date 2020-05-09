@@ -1,17 +1,20 @@
 from unittest.mock import Mock
 
 from cli.generator.docopt_generator import Generator, DocOptChain
-from domain.models import Note
 from domain.use_cases import create_note
+from utils.tests import generate_note
 
 
 # noinspection PyUnresolvedReferences
 def test_create_one_command():
-    note = Note("note title", "note content")
+    note = generate_note()
     gw: IGateway = Mock()
     gw.save_note.return_value = (note, "1")
+    gw.get_user.return_value = note.author
     input_parser = Mock()
-    input_parser.return_value = create_note.Input("1", note.summary, note.content)
+    input_parser.return_value = create_note.Input(
+        user_id="1", summary=note.summary, content=note.content
+    )
     output_presentor = Mock()
     chains = [
         DocOptChain(

@@ -43,7 +43,9 @@ class UseCase(AbstractUseCase[Input, Output]):
         # else:
         user = self.gateway.get_user(input.user_id)
         tags = [Tag(name=n) for n in input.tags]
-        note = Note(summary=input.summary, content=input.content, tags=tags)
+        note = Note(
+            summary=input.summary, content=input.content, tags=tags, author=user
+        )
         saved, id_ = self.gateway.save_note(note)
         return Output(note=saved, id=id_)
 
