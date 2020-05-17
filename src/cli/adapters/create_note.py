@@ -1,8 +1,8 @@
 import typing as t
 
+from cli import ioc
 from cli.generator.docopt_generator import DocOptChain
 from domain.use_cases import create_note
-from storage.gateways.create_note_gateway import Gateway
 
 
 def output_presentor(output: create_note.Output):
@@ -31,7 +31,7 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
 
 create_note_chain = DocOptChain(
     usecase=create_note.UseCase,
-    dependencies=dict(gateway=Gateway()),
+    dependencies=dict(gateway=ioc.create_note_gateway),
     name="mk",
     command_doc="""
                 Usage:

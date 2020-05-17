@@ -16,15 +16,14 @@ from cli.adapters.list_notes import list_notes_chain
 from cli.generator.docopt_generator import Generator
 
 if __name__ == "__main__":
-    links = [
-        create_note_chain,
-        list_notes_chain
-    ]
+
+    command_chains = [create_note_chain, list_notes_chain]
+
     g = Generator()
-    commands = g(links)
+    commands = g(command_chains)
 
     args = docopt.docopt(__doc__)
-    print(args)
+    # print(args)
     cmd = args["<command>"]
     command = commands.get(cmd)
     if command is None:

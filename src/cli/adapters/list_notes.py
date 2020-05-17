@@ -1,8 +1,8 @@
 import typing as t
 
+from cli import ioc
 from cli.generator.docopt_generator import DocOptChain
 from domain.use_cases import list_notes
-from storage.gateways import list_notes_gateway
 
 
 def output_presentor(output: list_notes.Output):
@@ -10,6 +10,8 @@ def output_presentor(output: list_notes.Output):
         for e in output.errors:
             print("ERROR:", e)
     else:
+        if not output.notes:
+            print("no notes yet. Create one!")
         for note in output.notes:
             print(note.summary)
             if note.tags:
@@ -27,7 +29,7 @@ def input_parser(args: t.Dict[str, t.Any]) -> list_notes.Input:
 
 list_notes_chain = DocOptChain(
     usecase=list_notes.UseCase,
-    dependencies=dict(gateway=list_notes_gateway.Gateway()),
+    dependencies=dict(gateway=ioc.list_notes_gateway),
     name="list",
     command_doc="""
                 List 

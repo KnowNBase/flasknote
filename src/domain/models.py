@@ -16,6 +16,7 @@ class User:
     """
     So, it's user
     """
+
     username: str
     first_name: str
     last_name: str
@@ -23,14 +24,23 @@ class User:
 
 
 @dataclass
-class Note:
+class BaseNote:
+    summary: str
+    content: str
+
+
+@dataclass
+class FreeNote(BaseNote):
+    tags: t.List[Tag] = field(default_factory=list)
+
+
+@dataclass
+class Note(BaseNote):
     """
     short note. little knowledge. can has tags for 
     aggregation, search
     """
 
-    summary: str
-    content: str
     author: User
     tags: t.List[Tag] = field(default_factory=list)
 

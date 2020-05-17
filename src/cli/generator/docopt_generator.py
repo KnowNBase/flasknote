@@ -24,8 +24,6 @@ class Generator:
 
 def create_command(link: DocOptChain) -> t.Callable:
     def command(args):
-        # print(f"||| run command {link.command_name} with:")
-        # print(f"||| args: {args}")
         args = docopt(link.command_doc, argv=args)
         link.compose()(args)
 
