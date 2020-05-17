@@ -14,9 +14,8 @@ def output_presentor(output: list_notes.Output):
         if not output.notes:
             print("no notes yet. Create one!")
         for note in output.notes:
-            print()
-            print("# ", end="")
             present_note(note)
+            print()
 
 
 def input_parser(args: t.Dict[str, t.Any]) -> list_notes.Input:
