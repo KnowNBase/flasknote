@@ -4,7 +4,7 @@ import typing as t
 
 import utils.json as dsjson
 from domain.errors import NotFoundError
-from domain.models import FreeNote, Tag
+from domain.models import Note, Tag, User
 
 
 class Repository:
@@ -21,21 +21,15 @@ class Repository:
                     for id_, note in notes.items():
                         self._notes[id_] = self.__parse_note(note)
 
-    # def __del__(self):
-    #     try:
-    #         self.sync_to_file()
-    #     except Exception as e:
-    #         print("Notes not sync: ", e)
-
     def all_notes(self):
         return list(self._notes.values())
 
-    def get(self, id: str) -> FreeNote:
+    def get(self, id: str) -> Note:
         if not self._notes.get(id):
             raise NotFoundError(type="note", id=id)
         return self._notes[id]
 
-    def save(self, note: FreeNote) -> t.Tuple[FreeNote, str]:
+    def save(self, note: Note) -> t.Tuple[Note, str]:
         id_ = self.__newid()
         self._notes[id_] = note
         self.sync_to_file()
@@ -48,9 +42,10 @@ class Repository:
         return str(int(lastid) + 1)
 
     @staticmethod
-    def __parse_note(data: dict) -> FreeNote:
+    def __parse_note(data: dict) -> Note:
         tags = [Tag(**d) for d in data["tags"]]
-        return FreeNote(summary=data["summary"], content=data["content"], tags=tags)
+        return Note(summary=data["summary"], content=data["content"], tags=tags,
+                    author=User(**data["author"]))
 
     def sync_to_file(self):
         with open(self.__notes_file, "w", encoding="utf8") as f:

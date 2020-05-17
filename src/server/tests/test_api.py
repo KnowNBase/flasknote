@@ -6,16 +6,13 @@ from server.server import app
 
 @pytest.fixture
 def flask_client():
-    app.config['TESTING'] = True
+    app.config["TESTING"] = True
     client = app.test_client()
     return client
 
 
 def test_create_note(flask_client):
-    flask_client.post('/notes/', json=dict(
-        summary="title",
-        content="text"
-    ))
+    flask_client.post("/notes/", json=dict(summary="title", content="text"))
     notes = list_notes_gateway.note_repo._notes
     assert len(notes) == 1
     assert notes["1"].summary == "title"
@@ -24,14 +21,11 @@ def test_create_note(flask_client):
 
 
 def test_get_notes(flask_client):
-    flask_client.post('/notes/', json=dict(
-        summary="title",
-        content="text"
-    ))
-    res = flask_client.get('/notes/')
+    flask_client.post("/notes/", json=dict(summary="title", content="text"))
+    res = flask_client.get("/notes/")
     json = res.get_json()
-    assert json['notes']
-    first_note = json['notes'][0]
-    assert first_note['summary'] == 'title', first_note
-    assert first_note['content'] == 'text', first_note
-    assert first_note['tags'] == []
+    assert json["notes"]
+    first_note = json["notes"][0]
+    assert first_note["summary"] == "title", first_note
+    assert first_note["content"] == "text", first_note
+    assert first_note["tags"] == []

@@ -2,6 +2,7 @@ import typing as t
 
 from cli import ioc
 from cli.generator.docopt_generator import DocOptChain
+from cli.presentors.note_presentor import present_note
 from domain.use_cases import list_notes
 
 
@@ -13,10 +14,9 @@ def output_presentor(output: list_notes.Output):
         if not output.notes:
             print("no notes yet. Create one!")
         for note in output.notes:
-            print(note.summary)
-            if note.tags:
-                print(f"{note.tags}")
-            print("\t" + note.content)
+            print()
+            print('# ', end='')
+            present_note(note)
 
 
 def input_parser(args: t.Dict[str, t.Any]) -> list_notes.Input:

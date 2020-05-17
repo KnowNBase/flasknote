@@ -1,6 +1,10 @@
 """
 Usage:
-    knb <command> [<args>...] [options]
+    knb [-hv] <command> [<args>...]
+
+Options:
+    (-h|--help)     show this help
+    (-v|--version)  show version
 
 Commands:
     mk - make note
@@ -22,7 +26,7 @@ if __name__ == "__main__":
     g = Generator()
     commands = g(command_chains)
 
-    args = docopt.docopt(__doc__)
+    args = docopt.docopt(__doc__, version="0.0.1", options_first=True)
     # print(args)
     cmd = args["<command>"]
     command = commands.get(cmd)

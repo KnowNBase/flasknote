@@ -24,23 +24,9 @@ class User:
 
 
 @dataclass
-class BaseNote:
+class Note:
     summary: str
     content: str
-
-
-@dataclass
-class FreeNote(BaseNote):
-    tags: t.List[Tag] = field(default_factory=list)
-
-
-@dataclass
-class Note(BaseNote):
-    """
-    short note. little knowledge. can has tags for 
-    aggregation, search
-    """
-
     author: User
     tags: t.List[Tag] = field(default_factory=list)
 
