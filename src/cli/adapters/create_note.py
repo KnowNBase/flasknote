@@ -6,6 +6,8 @@ from cli.generator.docopt_generator import DocOptChain
 from cli.presentors.note_presentor import present_note
 from domain.use_cases import create_note
 
+EOF_ENTER_TIMES = 2
+
 
 def output_presentor(output: create_note.Output):
     if output.errors:
@@ -23,6 +25,11 @@ def output_presentor(output: create_note.Output):
 def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
     summary = args["SUMMARY"]
     content = args["CONTENT"]
+    tags = args["TAGS"]
+    if tags is None:
+        tags = ""
+    tags = tags.split(",")
+
     if args["help"]:
         print(command_doc)
         sys.exit(0)
@@ -32,28 +39,30 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
         enter_times = 0
 
         summary = input("summary>")
+        tags_str = input("tags>")
+        tags = tags_str.split(",")
 
-        while enter_times < 3 or not content:
+        while enter_times < EOF_ENTER_TIMES or not content:
             line = input("content>")
             if line == "":
-                if enter_times >= 3 and not content:
+                if enter_times >= EOF_ENTER_TIMES and not content:
                     print("enter content please or quit with Ctrl+C")
                 enter_times += 1
             else:
                 enter_times = 0
                 content += line + "\n"
-    return create_note.Input("1", summary, content)
+    return create_note.Input("1", summary.strip(), content.strip(), tags=tags)
 
 
-command_doc = """Usage:
-    mk SUMMARY CONTENT
+command_doc = f"""Usage:
+    mk SUMMARY CONTENT [TAGS]
     mk --interactive
     mk help
 
 Options:
     --interactive       input note interactive. In this mode you enter 
                         summary as first line, and next lines will become 
-                        content. To end content, press Enter 3 times.   
+                        content. To end content, press Enter {EOF_ENTER_TIMES} times.   
 """
 
 create_note_chain = DocOptChain(
