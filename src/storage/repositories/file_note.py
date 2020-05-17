@@ -44,8 +44,12 @@ class Repository:
     @staticmethod
     def __parse_note(data: dict) -> Note:
         tags = [Tag(**d) for d in data["tags"]]
-        return Note(summary=data["summary"], content=data["content"], tags=tags,
-                    author=User(**data["author"]))
+        return Note(
+            summary=data["summary"],
+            content=data["content"],
+            tags=tags,
+            author=User(**data["author"]),
+        )
 
     def sync_to_file(self):
         with open(self.__notes_file, "w", encoding="utf8") as f:

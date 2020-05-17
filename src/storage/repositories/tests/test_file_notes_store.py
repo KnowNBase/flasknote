@@ -12,8 +12,10 @@ def test_note_create():
     assert len(repo.all_notes()) == 0
     user = factory.create_user()
     note = Note(
-        summary="title", content="text", tags=[Tag(name="dumb"), Tag(name="data")]
-        , author=user
+        summary="title",
+        content="text",
+        tags=[Tag(name="dumb"), Tag(name="data")],
+        author=user,
     )
     repo.save(note)
     repo.sync_to_file()

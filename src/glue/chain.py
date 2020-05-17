@@ -16,4 +16,5 @@ class Chain:
             input_ = self.parse_input(args)
             output = uc(input_)
             return self.present_output(output)
+
         return use_case_function

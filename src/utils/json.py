@@ -10,18 +10,18 @@ class EnhancedJSONEncoder(json.JSONEncoder):
 
 
 def dumps(
-        payload,
-        *,
-        skipkeys=False,
-        ensure_ascii=False,
-        check_circular=True,
-        allow_nan=True,
-        cls=None,
-        indent=None,
-        separators=None,
-        default=None,
-        sort_keys=False,
-        **kwargs
+    payload,
+    *,
+    skipkeys=False,
+    ensure_ascii=False,
+    check_circular=True,
+    allow_nan=True,
+    cls=None,
+    indent=None,
+    separators=None,
+    default=None,
+    sort_keys=False,
+    **kwargs
 ) -> str:
     kwargs["skipkeys"] = skipkeys
     kwargs["ensure_ascii"] = ensure_ascii

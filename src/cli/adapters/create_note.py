@@ -27,7 +27,7 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
         print(command_doc)
         sys.exit(0)
 
-    if args['--interactive']:
+    if args["--interactive"]:
         content = ""
         enter_times = 0
 

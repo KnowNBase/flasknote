@@ -1,16 +1,27 @@
-# whats next
+# TODO
+
+## Core features
+- [x] Create note
+- [ ] tagging notes
+- [ ] group notes by tags
+- [ ] link source materials
+- [ ] making knowledge page
+- [ ] progress of read source material (manual set value)
+- [ ] import from files
 
 ## Users and Cooperative
 
-- [ ] multiuser, note owning
+- [x] note owning
+- [ ] multiuser
 - [ ] user permissions
 - [ ] sharing notes
 - [ ] coop editing page
 
-## Main (domain) features
+# Roadmap
 
-- [ ] group notes by tag
-- [ ] page of knowledge
-- [ ] convert notes to page
-- [ ] page hierarchy
+- [ ] CLI
+- [ ] tagging
+- [ ] group notes by tags
+- [ ] list source materials
+- [ ] making knowledge page
 

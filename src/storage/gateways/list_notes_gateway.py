@@ -25,5 +25,5 @@ class Gateway(IGateway):
                 page = s.page - 1
                 offset = s.items_per_page * page
                 limit = s.items_per_page * (page + 1)
-                result_notes = result_notes[offset: limit]
+                result_notes = result_notes[offset:limit]
         return result_notes

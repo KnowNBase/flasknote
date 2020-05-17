@@ -9,5 +9,5 @@ def create_user():
         username=p.username(),
         first_name=p.first_name(),
         last_name=p.last_name(),
-        middle_name=p.surname()
+        middle_name=p.surname(),
     )

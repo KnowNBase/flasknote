@@ -15,7 +15,7 @@ def output_presentor(output: list_notes.Output):
             print("no notes yet. Create one!")
         for note in output.notes:
             print()
-            print('# ', end='')
+            print("# ", end="")
             present_note(note)
 
 
