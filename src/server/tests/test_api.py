@@ -14,11 +14,12 @@ def flask_client():
 def test_create_note(flask_client):
     flask_client.post("/notes/", json=dict(summary="title", content="text"))
     # TODO: use mock or test api or public api
-    notes = list_notes_gateway.notes._notes
+    notes = list_notes_gateway.notes.all_notes()
     assert len(notes) == 1
-    assert notes["1"].summary == "title"
-    assert notes["1"].content == "text"
-    assert notes["1"].author
+    note = notes[0]
+    assert note.summary == "title"
+    assert note.content == "text"
+    assert note.author
 
 
 def test_get_notes(flask_client):

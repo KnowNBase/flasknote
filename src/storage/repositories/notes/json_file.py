@@ -5,9 +5,10 @@ import typing as t
 import utils.json as dsjson
 from domain.errors import NotFoundError
 from domain.models import Note, Tag, User
+from storage.repositories.notes.interface import INotesRepository
 
 
-class Repository:
+class Repository(INotesRepository):
     SPLITTER = "\nKNBSPLITTER\n"
 
     def __init__(self, filepath):

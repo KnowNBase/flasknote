@@ -3,10 +3,11 @@ import typing as t
 from domain.errors import NotFoundError
 from domain.models import Note, User
 from domain.use_cases.list_notes import IGateway, Spec, PageSpec
+from storage.repositories.notes.interface import INotesRepository
 
 
 class Gateway(IGateway):
-    def __init__(self, notes_repo, users_repo):
+    def __init__(self, notes_repo: INotesRepository, users_repo):
         self.users = users_repo
         self.notes = notes_repo
 

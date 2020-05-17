@@ -8,7 +8,7 @@ class Repository:
     def __init__(self):
         self._notes = {}
 
-    def all_notes(self):
+    def all_notes(self) -> t.List[Note]:
         return list(self._notes.values())
 
     def get(self, id: str) -> Note:
