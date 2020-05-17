@@ -4,7 +4,7 @@ from domain.errors import NotFoundError
 from domain.models import Note
 
 
-class DictNoteRepository:
+class Repository:
     def __init__(self):
         self._notes = {}
 

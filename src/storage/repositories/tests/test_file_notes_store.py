@@ -1,7 +1,7 @@
 import tempfile
 
 from domain.models import Note, Tag
-from storage.repositories.file_note import Repository
+from storage.repositories.notes.json_file import Repository
 from utils import factory
 
 

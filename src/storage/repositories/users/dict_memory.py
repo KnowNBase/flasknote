@@ -2,7 +2,7 @@ from domain.errors import NotFoundError
 from domain.models import User
 
 
-class DictUserRepository:
+class Repository:
     def __init__(self):
         self.users = {}
 
