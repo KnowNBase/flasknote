@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import typing as t
+from itertools import filterfalse, chain
 
 from cli import ioc  # type: ignore
 from cli.generator.docopt_generator import DocOptChain
@@ -47,7 +48,15 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
 
         with open(tempfilename, "r", encoding="utf8") as tmpfile:
             summary = tmpfile.readline()
-            tmpfile.readline()
+            tag_line = tmpfile.readline()
+            if tag_line:
+                tags = list(
+                    filterfalse(
+                        lambda a: not a,
+                        chain(*[t.split(",") for t in tag_line.split()]),
+                    )
+                )
+
             content = tmpfile.read()
             print(type(summary), summary)
             print(type(content), content)
