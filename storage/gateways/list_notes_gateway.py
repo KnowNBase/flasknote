@@ -2,8 +2,8 @@ import typing as t
 
 from knb.errors import NotFoundError
 from knb.models import Note, User
-from knb.use_cases.list_notes import IGateway
-from knb.use_cases.specs import Spec, PageSpec
+from knb.use_cases import IGateway
+from knb.use_cases import Spec, PageSpec
 from storage.repositories.notes.interface import INotesRepository
 
 

@@ -4,7 +4,7 @@ import pytest  # type: ignore
 
 import knb.use_cases.specs
 from knb.use_cases import list_notes
-from knb.use_cases.specs import PageSpec, AuthorSpec
+from knb.use_cases import PageSpec, AuthorSpec
 from knb.utils import factory
 
 

@@ -2,7 +2,7 @@ import typing as t
 
 from knb.errors import NotFoundError
 from knb.models import Note, User
-from knb.use_cases.create_note import IGateway
+from knb.use_cases import IGateway
 from storage.repositories.notes.interface import INotesRepository
 
 

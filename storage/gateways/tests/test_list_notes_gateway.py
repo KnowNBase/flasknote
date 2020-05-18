@@ -1,6 +1,6 @@
 import storage.repositories.notes.dict_memory as notes_memory
 import storage.repositories.users.dict_memory as users_memory
-from knb.use_cases.specs import PageSpec
+from knb.use_cases import PageSpec
 from storage.gateways.list_notes_gateway import Gateway
 from utils.tests import generate_note
 
