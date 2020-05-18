@@ -1,9 +1,9 @@
-import typing as t
 from dataclasses import asdict
 
+import typing as t
 from flask import request  # type: ignore
+from knb.use_cases.list_notes import Input, UseCase, Output
 
-from knb.use_cases import Input, UseCase, Output
 from server.generator import FlaskAPIChain
 from server.ioc import list_notes_gateway
 
