@@ -1,13 +1,27 @@
+import typing as t
+
 import mimesis  # type: ignore
 
-from domain.models import User
+from domain.models import User, Note, Tag
 
 
 def create_user():
-    p = mimesis.Person()
+    person = mimesis.Generic().person
     return User(
-        username=p.username(),
-        first_name=p.first_name(),
-        last_name=p.last_name(),
-        middle_name=p.surname(),
+        username=person.username(),
+        first_name=person.first_name(),
+        last_name=person.last_name(),
+        middle_name=person.surname(),
+    )
+
+
+def create_note(tags: t.List[Tag] = None) -> Note:
+    if tags is None:
+        tags = []
+    text = mimesis.Generic().text
+    return Note(
+        summary=text.title(),
+        content=text.text(),
+        tags=tags,
+        author=create_user()
     )
