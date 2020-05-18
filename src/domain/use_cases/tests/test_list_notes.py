@@ -2,8 +2,9 @@ from unittest.mock import Mock
 
 import pytest  # type: ignore
 
+import domain.use_cases.specs
 from domain.use_cases import list_notes
-from domain.use_cases.list_notes import AuthorSpec, PageSpec
+from domain.use_cases.specs import PageSpec, AuthorSpec
 from utils.tests import generate_note
 
 
@@ -22,7 +23,7 @@ def test_list_notes(gateway):
     uc = list_notes.UseCase(gateway)
 
     response: list_notes.Output = uc(list_notes.Input(user_id="1", page=1))
-    spec = list_notes.AuthorSpec("1").and_spec(list_notes.PageSpec(1, 100))
+    spec = domain.use_cases.specs.AuthorSpec("1").and_spec(domain.use_cases.specs.PageSpec(1, 100))
     gateway.load_notes.assert_called_with([spec])
     assert not response.errors
     assert response.notes
@@ -33,7 +34,7 @@ def test_list_other_page(gateway):
     uc = list_notes.UseCase(gateway)
 
     response: list_notes.Output = uc(list_notes.Input(user_id="1", page=2))
-    spec = list_notes.AuthorSpec("1").and_spec(list_notes.PageSpec(2, 100))
+    spec = domain.use_cases.specs.AuthorSpec("1").and_spec(domain.use_cases.specs.PageSpec(2, 100))
     gateway.load_notes.assert_called_with([spec])
     assert not response.errors
     assert response.notes

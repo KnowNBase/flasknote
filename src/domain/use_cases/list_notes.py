@@ -5,37 +5,7 @@ from dataclasses import dataclass, field
 from domain.errors import BaseError
 from domain.models import User, Note
 from domain.use_cases import AbstractUseCase
-
-
-class Spec:
-    def and_spec(self, other: "Spec") -> "Spec":
-        return AndSpec(self, other)
-
-    def or_spec(self, other: "Spec") -> "Spec":
-        return OrSpec(self, other)
-
-
-@dataclass
-class OrSpec(Spec):
-    left: Spec
-    right: Spec
-
-
-@dataclass
-class AndSpec(Spec):
-    left: Spec
-    right: Spec
-
-
-@dataclass
-class PageSpec(Spec):
-    page: int
-    items_per_page: int
-
-
-@dataclass
-class AuthorSpec(Spec):
-    author_id: str
+from domain.use_cases import specs
 
 
 class IGateway(metaclass=ABCMeta):
@@ -44,7 +14,7 @@ class IGateway(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def load_notes(self, specs: t.List[Spec]) -> t.List[Note]:
+    def load_notes(self, specs: t.List[specs.Spec]) -> t.List[Note]:
         pass
 
 
@@ -68,8 +38,8 @@ class UseCase(AbstractUseCase[Input, Output]):
         user = self.gateway.get_user(input.user_id)
         # check permission
         # self.permission_service.check_user(user, self)
-        spec: Spec = AuthorSpec(input.user_id)
-        spec = spec.and_spec(PageSpec(input.page, 100))
+        spec: specs.Spec = specs.AuthorSpec(input.user_id)
+        spec = spec.and_spec(specs.PageSpec(input.page, 100))
         notes = self.gateway.load_notes([spec])
         return Output(notes=notes)
 

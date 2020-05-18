@@ -2,7 +2,8 @@ import typing as t
 
 from domain.errors import NotFoundError
 from domain.models import Note, User
-from domain.use_cases.list_notes import IGateway, Spec, PageSpec
+from domain.use_cases.list_notes import IGateway
+from domain.use_cases.specs import Spec, PageSpec
 from storage.repositories.notes.interface import INotesRepository
 
 
