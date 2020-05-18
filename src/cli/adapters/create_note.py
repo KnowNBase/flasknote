@@ -1,3 +1,4 @@
+import subprocess
 import sys
 import typing as t
 
@@ -33,6 +34,23 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
     if args["help"]:
         print(command_doc)
         sys.exit(0)
+    if args["--editor"]:
+        import tempfile
+
+        tempfilename = ""
+        # open/close for flush buffers to file on disk
+        with tempfile.NamedTemporaryFile(
+                mode="w+", encoding="utf8", delete=False
+        ) as tmpfile:
+            tempfilename = tmpfile.name
+            subprocess.call(["vim", tempfilename])
+
+        with open(tempfilename, "r", encoding="utf8") as tmpfile:
+            summary = tmpfile.readline()
+            tmpfile.readline()
+            content = tmpfile.read()
+            print(type(summary), summary)
+            print(type(content), content)
 
     if args["--interactive"]:
         content = ""
@@ -51,18 +69,24 @@ def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
             else:
                 enter_times = 0
                 content += line + "\n"
+    if not (content.strip() and summary.strip()):
+        print("content or summary empty. try again")
+        sys.exit(1)
+
     return create_note.Input("1", summary.strip(), content.strip(), tags=tags)
 
 
 command_doc = f"""Usage:
     mk SUMMARY CONTENT [TAGS]
     mk --interactive
+    mk --editor
     mk help
 
 Options:
     --interactive       input note interactive. In this mode you enter 
                         summary as first line, and next lines will become 
-                        content. To end content, press Enter {EOF_ENTER_TIMES} times.   
+                        content. To end content, press Enter {EOF_ENTER_TIMES} times.
+    --editor            run external editor using env var EDITOR
 """
 
 create_note_chain = DocOptChain(

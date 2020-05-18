@@ -2,7 +2,7 @@
 
 ## Core features
 - [x] Create note
-- [ ] tagging notes
+- [x] tagging notes
 - [ ] group notes by tags
 - [ ] link source materials
 - [ ] making knowledge page
@@ -19,8 +19,9 @@
 
 # Roadmap
 
-- [ ] CLI
-- [ ] tagging
+- [x] CLI
+- [x] tagging
+- [x] create note with external editor (vim only)
 - [ ] group notes by tags
 - [ ] list source materials
 - [ ] making knowledge page
