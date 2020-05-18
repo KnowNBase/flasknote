@@ -9,14 +9,6 @@
 - [ ] progress of read source material (manual set value)
 - [ ] import from files
 
-## Users and Cooperative
-
-- [x] note owning
-- [ ] multiuser
-- [ ] user permissions
-- [ ] sharing notes
-- [ ] coop editing page
-
 # Roadmap
 
 - [x] CLI
@@ -26,3 +18,17 @@
 - [ ] list source materials
 - [ ] making knowledge page
 
+# Epics
+
+## Users and Cooperative
+
+- [x] note owning
+- [ ] multiuser
+- [ ] user permissions
+- [ ] sharing notes
+- [ ] coop editing page
+
+## Publish
+- [ ] setup & install
+- [ ] configuration
+- [ ] Xplatform
