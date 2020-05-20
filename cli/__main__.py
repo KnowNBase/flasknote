@@ -1,6 +1,7 @@
 """
 Usage:
     knb [-hv] <command> [<args>...]
+    knb help
 
 Options:
     (-h|--help)     show this help
@@ -9,19 +10,24 @@ Options:
 Commands:
     mk - make note
     list - list notes
+    show-groups - list notes grouped by tags
 """
 
-import sys
-
 import docopt  # type: ignore
+import sys
 
 from cli.adapters.create_note import create_note_chain
 from cli.adapters.list_notes import list_notes_chain
+from cli.adapters.show_grouped_notes import group_by_tag_chain
 from cli.generator.docopt_generator import Generator
 
 if __name__ == "__main__":
 
-    command_chains = [create_note_chain, list_notes_chain]
+    command_chains = [
+        list_notes_chain,
+        create_note_chain,
+        group_by_tag_chain,
+    ]
 
     g = Generator()
     commands = g(command_chains)

@@ -6,11 +6,7 @@ def present_note(note: Note):
     print("-" * len(note.summary))
     if note.tags:
         tags_str = ", ".join(["#" + tag.name for tag in note.tags])
-        print(tags_str)
+        print(f"<< {tags_str} >>")
+    print()
     if note.content:
-        maxline = max([len(l) for l in note.content.splitlines()])
-        print("*" * maxline)
         print(note.content)
-        print("*" * maxline)
-    else:
-        print("*" * len(note.summary))

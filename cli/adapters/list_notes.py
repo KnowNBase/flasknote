@@ -3,10 +3,11 @@ import typing as t
 from cli import ioc
 from cli.generator.docopt_generator import DocOptChain
 from cli.presentors.note_presentor import present_note
+from glue.chain import PresenterTwiks
 from knb.use_cases import list_notes
 
 
-def output_presentor(output: list_notes.Output):
+def output_presentor(output: list_notes.Output, _: PresenterTwiks):
     if output.errors:
         for e in output.errors:
             print("ERROR:", e)
@@ -18,7 +19,7 @@ def output_presentor(output: list_notes.Output):
             print()
 
 
-def input_parser(args: t.Dict[str, t.Any]) -> list_notes.Input:
+def input_parser(args: t.Dict[str, t.Any], _: PresenterTwiks) -> list_notes.Input:
     pg = args["PAGE"]
     if not pg:
         pg = 1

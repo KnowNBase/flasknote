@@ -2,18 +2,18 @@ from dataclasses import asdict
 
 import typing as t
 from flask import request  # type: ignore
-from knb.use_cases.list_notes import Input, UseCase, Output
 
+from knb.use_cases.list_notes import Input, UseCase, Output
 from server.generator import FlaskAPIChain
 from server.ioc import list_notes_gateway
 
 
-def parse(_: t.Dict[str, t.Any]) -> Input:
+def parse(_: t.Dict[str, t.Any], __) -> Input:
     page = int(request.args.get("page", 1))
     return Input(user_id="1", page=page)
 
 
-def present(output: Output) -> t.Dict[str, t.Any]:
+def present(output: Output, _) -> t.Dict[str, t.Any]:
     error_dicts = []
     for e in output.errors:
         error_dict = asdict(e)

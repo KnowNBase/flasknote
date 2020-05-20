@@ -6,12 +6,13 @@ from itertools import filterfalse, chain
 from cli import ioc  # type: ignore
 from cli.generator.docopt_generator import DocOptChain
 from cli.presentors.note_presentor import present_note
+from glue.chain import PresenterTwiks
 from knb.use_cases import create_note
 
 EOF_ENTER_TIMES = 2
 
 
-def output_presentor(output: create_note.Output):
+def output_presentor(output: create_note.Output, _: PresenterTwiks):
     if output.errors:
         for e in output.errors:
             print("ERROR:", e)
@@ -24,7 +25,7 @@ def output_presentor(output: create_note.Output):
         present_note(note)
 
 
-def input_parser(args: t.Dict[str, t.Any]) -> create_note.Input:
+def input_parser(args: t.Dict[str, t.Any], _: PresenterTwiks) -> create_note.Input:
     summary = args["SUMMARY"]
     content = args["CONTENT"]
     tags = args["TAGS"]
