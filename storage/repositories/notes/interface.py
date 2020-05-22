@@ -22,3 +22,9 @@ class INotesRepository(metaclass=ABCMeta):
         """
 
         """
+
+    @abstractmethod
+    def update(self, old_note_id: str, note: Note):
+        """
+
+        """

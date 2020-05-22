@@ -36,6 +36,9 @@ class Repository(INotesRepository):
         self.sync_to_file()
         return note, id_
 
+    def update(self, old_note_id: str, note: Note):
+        self._notes[old_note_id] = note
+
     def __newid(self) -> str:
         if not self._notes:
             return str(1)
@@ -56,3 +59,4 @@ class Repository(INotesRepository):
         with open(self.__notes_file, "w", encoding="utf8") as f:
             data = dsjson.dumps(self._notes, indent=2)
             f.write(data)
+

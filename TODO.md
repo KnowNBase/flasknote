@@ -1,27 +1,16 @@
 # TODO
 
-## Core features
-- [x] Create note
-- [x] tagging notes
-- [ ] group notes by tags
-- [ ] link source materials
-- [ ] making knowledge page
-- [ ] progress of read source material (manual set value)
-- [ ] import from files
-
 # Roadmap
 
-- [x] CLI
-- [x] tagging
+- [x] create note
+- [x] list notes
+- [x] tagging notes
 - [x] create note with external editor (vim only)
-- [ ] group notes by tags
-- [ ] list source materials
+- [x] group notes by tags
+- [ ] change note
+- [ ] show notes with tag (filtering)
+- [ ] link source materials
 - [ ] making knowledge page
-
-# Epics
-
-## Users and Cooperative
-
 - [x] note owning
 - [ ] multiuser
 - [ ] user permissions
